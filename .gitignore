@@ -1,0 +1,3 @@
+*.db
+.answer.py
+__pycache__

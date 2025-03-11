@@ -10,21 +10,20 @@ app = Flask(__name__)
 setup_db()
 
 
-@app.route("/api/user", methods=["GET"])
-def get_user():
-    user_id = request.args.get("id")
-    conn = sqlite3.connect("users.db")
-    cursor = conn.cursor()
-    query = f"SELECT * FROM users WHERE id = {user_id}"
-    cursor.execute(query)
-    user = cursor.fetchone()
+@app.route("/api/transaction", methods=["GET"])
+def get_transaction():
+    transaction_id = request.args.get("id")
+    conn = sqlite3.connect("transactions.db")
 
-    if user:
-        return jsonify(
-            {"id": user[0], "name": user[1], "email": user[2], "country": user[3]}
-        )
+    cursor = conn.cursor()
+    query = f"SELECT * FROM transactions WHERE id = {transaction_id}"
+    cursor.execute(query)
+    transaction = cursor.fetchall()
+
+    if transaction:
+        return jsonify(transaction)
     else:
-        raise ValueError("User not found")
+        raise ValueError("Transaction not found")
 
 
 if __name__ == "__main__":
